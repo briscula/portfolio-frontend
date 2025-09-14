@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This feature focuses on redesigning the dividend portfolio application with a modern, clean interface inspired by successful financial applications like dividend.watch and professional dashboards like Vercel. The goal is to create an intuitive, visually appealing user experience that makes dividend tracking and portfolio management effortless while maintaining the existing authentication and API functionality.
+This feature focuses on redesigning the dividend portfolio application with a modern, clean interface that provides an intuitive user experience for managing multiple portfolios and tracking dividend investments. The design emphasizes real-time data integration, responsive layouts, and professional financial application patterns while maintaining the existing Next.js + Auth0 + API architecture.
 
 ## Requirements
 
@@ -30,44 +30,77 @@ This feature focuses on redesigning the dividend portfolio application with a mo
 
 ### Requirement 3
 
-**User Story:** As a dividend tracker, I want my portfolio data displayed in clean, scannable lists, so that I can quickly review my holdings and their performance.
+**User Story:** As a dividend investor with multiple portfolios, I want to easily navigate between portfolio overview and detailed views, so that I can manage my investments efficiently.
 
 #### Acceptance Criteria
 
-1. WHEN a user views their portfolio THEN the system SHALL display holdings in a clean list format similar to Vercel's deployment list
-2. WHEN a user views dividend data THEN the system SHALL show key information (symbol, company name, dividend amount, dates) in a hierarchical layout
-3. WHEN a user scans the portfolio list THEN the system SHALL use consistent spacing, typography, and status indicators
-4. WHEN a user needs to take action THEN the system SHALL provide clear action buttons aligned appropriately
+1. WHEN a user accesses the portfolio section THEN the system SHALL display a list of all portfolios with key information (name, currency, creation date)
+2. WHEN a user clicks on a portfolio THEN the system SHALL navigate to a detailed view showing positions, metrics, and performance data
+3. WHEN a user views portfolio positions THEN the system SHALL display data in a clean table with symbol, company, shares, costs, dividends, and portfolio percentage
+4. WHEN a user navigates between portfolios THEN the system SHALL maintain consistent layout and provide clear breadcrumb navigation
 
 ### Requirement 4
 
-**User Story:** As a portfolio manager, I want forms and inputs that are clean and easy to use, so that I can efficiently add stocks and update portfolio information.
+**User Story:** As a user, I want the application to handle loading states gracefully, so that I understand when data is being fetched and can use the interface immediately.
 
 #### Acceptance Criteria
 
-1. WHEN a user needs to add a stock THEN the system SHALL provide a search input with clean styling and placeholder text
-2. WHEN a user fills out forms THEN the system SHALL use consistent input styling with proper labels and validation feedback
-3. WHEN a user interacts with dropdowns and selects THEN the system SHALL provide modern, accessible form controls
-4. WHEN a user submits forms THEN the system SHALL provide clear primary action buttons with appropriate hover states
+1. WHEN a user navigates to any page THEN the system SHALL show the page layout immediately without full-screen loading spinners
+2. WHEN data is being fetched THEN the system SHALL show contextual loading indicators within specific content areas
+3. WHEN API calls are in progress THEN the system SHALL display appropriate loading messages and spinners in tables and card areas
+4. WHEN data loads THEN the system SHALL smoothly transition from loading states to content without layout shifts
 
 ### Requirement 5
 
-**User Story:** As a user, I want the application to work well on all my devices, so that I can check my portfolio whether I'm on desktop, tablet, or mobile.
+**User Story:** As a user, I want the application to display currency information correctly, so that I can see my portfolio values in the appropriate currency symbols and formatting.
 
 #### Acceptance Criteria
 
-1. WHEN a user accesses the app on desktop THEN the system SHALL display the full sidebar and multi-column layouts
-2. WHEN a user accesses the app on tablet THEN the system SHALL adapt the layout appropriately while maintaining usability
-3. WHEN a user accesses the app on mobile THEN the system SHALL provide a mobile-optimized experience with collapsible navigation
-4. WHEN a user switches between devices THEN the system SHALL maintain consistent functionality across all screen sizes
+1. WHEN a user views portfolio data THEN the system SHALL display amounts using the portfolio's configured currency symbol (€, $, etc.)
+2. WHEN a user sees financial data THEN the system SHALL format numbers with appropriate decimal places and locale-specific formatting
+3. WHEN a user views multiple portfolios THEN the system SHALL handle different currencies correctly for each portfolio
+4. WHEN a user sees percentage values THEN the system SHALL display them with exactly 2 decimal places for consistency
 
 ### Requirement 6
 
-**User Story:** As a dividend investor, I want key portfolio metrics displayed prominently, so that I can quickly assess my portfolio's performance at a glance.
+**User Story:** As a dividend investor, I want key portfolio metrics displayed prominently with real API data, so that I can quickly assess my actual portfolio performance.
 
 #### Acceptance Criteria
 
-1. WHEN a user views the dashboard THEN the system SHALL display metric cards showing Total Value, Monthly Dividends, and Annual Yield
-2. WHEN a user views metrics THEN the system SHALL use clean card layouts with appropriate icons and typography hierarchy
-3. WHEN a user sees performance data THEN the system SHALL include visual indicators for positive/negative changes
-4. WHEN a user wants more detail THEN the system SHALL provide clear paths to drill down into specific metrics
+1. WHEN a user views the dashboard THEN the system SHALL display metric cards with real data from the API showing Total Value, Total Cost, and Unrealized P&L
+2. WHEN a user views portfolio details THEN the system SHALL show summary cards specific to that portfolio with accurate currency formatting
+3. WHEN a user sees performance data THEN the system SHALL include visual indicators for positive/negative changes with properly formatted percentages
+4. WHEN a user views positions THEN the system SHALL display portfolio percentage allocation with visual progress bars
+
+### Requirement 7
+
+**User Story:** As a user with multiple portfolios, I want efficient navigation between portfolio list and detail views, so that I can manage my investments across different portfolios.
+
+#### Acceptance Criteria
+
+1. WHEN a user visits /portfolio THEN the system SHALL display a grid of portfolio cards with key information and navigation links
+2. WHEN a user clicks on a portfolio THEN the system SHALL navigate to /portfolio/{id} showing detailed positions and metrics
+3. WHEN a user is viewing a portfolio detail THEN the system SHALL provide clear breadcrumb navigation back to the portfolio list
+4. WHEN a user navigates between views THEN the system SHALL maintain consistent layout and loading patterns
+
+### Requirement 8
+
+**User Story:** As a user, I want the application to integrate seamlessly with the backend API, so that I see real-time data about my actual investments.
+
+#### Acceptance Criteria
+
+1. WHEN the application loads THEN the system SHALL fetch portfolios from /portfolios endpoint and display them correctly
+2. WHEN a user selects a portfolio THEN the system SHALL fetch positions from /portfolios/{id}/positions with proper pagination support
+3. WHEN API data is received THEN the system SHALL map the response correctly to display symbols, quantities, costs, dividends, and percentages
+4. WHEN API calls fail THEN the system SHALL display appropriate error messages without breaking the interface
+
+### Requirement 9
+
+**User Story:** As a user, I want the application to automatically detect my language preference and provide a seamless internationalization experience, so that I can use the app in my preferred language.
+
+#### Acceptance Criteria
+
+1. WHEN a user first visits the application THEN the system SHALL detect their browser language preference and redirect to the appropriate locale (en/es)
+2. WHEN a user accesses the root URL THEN the system SHALL automatically redirect to the dashboard in their preferred language
+3. WHEN a user accesses a locale root (e.g., /en, /es) THEN the system SHALL redirect to the dashboard for that locale
+4. WHEN a user wants to change language THEN the system SHALL provide language switching functionality and remember their preference

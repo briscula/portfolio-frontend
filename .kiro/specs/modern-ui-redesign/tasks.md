@@ -69,91 +69,160 @@
     - Implement responsive layout for different screen sizes
     - _Requirements: 3.1, 3.2, 5.1, 5.2, 5.3_
 
-- [ ] 5. Build portfolio page
-  - [ ] 5.1 Create portfolio holdings table
-    - Build table component with clean styling and hover effects
-    - Add columns for symbol, company, shares, value, dividend info
-    - Implement sorting functionality for table columns
-    - _Requirements: 3.1, 3.2, 3.3_
+- [x] 5. Build portfolio pages with real API integration
+  - [x] 5.1 Create portfolio list page (/portfolio)
+    - Build portfolio cards grid showing all user portfolios
+    - Display portfolio name, currency, description, and creation date
+    - Implement navigation to individual portfolio details
+    - Add loading states and empty state handling
+    - _Requirements: 3.1, 3.2, 7.1, 7.2_
 
-  - [ ] 5.2 Add portfolio search and filters
-    - Create search input for filtering holdings
-    - Add filter dropdowns for different criteria
-    - Implement real-time filtering of portfolio data
-    - _Requirements: 4.1, 4.2, 4.3_
+  - [x] 5.2 Create portfolio detail page (/portfolio/{id})
+    - Build detailed portfolio view with positions table
+    - Display portfolio summary metrics (Total Value, Cost, P&L)
+    - Show positions table with symbol, company, shares, costs, dividends, portfolio percentage
+    - Implement pagination for positions data
+    - Add breadcrumb navigation back to portfolio list
+    - _Requirements: 3.3, 3.4, 6.1, 6.2, 6.4, 7.3, 7.4_
 
-  - [ ] 5.3 Create add stock functionality
-    - Build modal or form for adding new stocks to portfolio
-    - Implement stock symbol search with API integration
-    - Add form validation and success/error states
+  - [x] 5.3 Integrate with backend API
+    - Connect to /portfolios endpoint for portfolio list
+    - Connect to /portfolios/{id}/positions for position data
+    - Handle paginated responses with proper pagination controls
+    - Map API response data to UI components correctly
+    - _Requirements: 8.1, 8.2, 8.3, 8.4_
+
+- [x] 6. Implement currency and formatting support
+  - [x] 6.1 Add dynamic currency support
+    - Use portfolio currency information from API
+    - Display correct currency symbols (€, $, etc.) based on portfolio
+    - Format currency amounts using Intl.NumberFormat with proper locale
+    - _Requirements: 5.1, 5.2, 5.3_
+
+  - [x] 6.2 Implement consistent percentage formatting
+    - Format all percentage values to exactly 2 decimal places
+    - Apply consistent formatting in metric cards and tables
+    - Add proper +/- indicators for change values
+    - _Requirements: 5.4, 6.3_
+
+  - [x] 6.3 Add portfolio percentage visualization
+    - Display portfolio allocation percentages for each position
+    - Add visual progress bars to show relative position sizes
+    - Ensure percentages are properly calculated and displayed
+    - _Requirements: 6.4_
+
+- [x] 7. Implement improved loading and error states
+  - [x] 7.1 Remove full-page loading spinners
+    - Replace full-screen loading with contextual loading indicators
+    - Show page layout immediately while data loads
+    - Add loading spinners within content areas (tables, cards)
+    - _Requirements: 4.1, 4.2_
+
+  - [x] 7.2 Add contextual loading states
+    - Implement "Loading portfolios..." in portfolio list
+    - Add "Loading positions..." in portfolio detail tables
+    - Show "Loading portfolio..." for summary cards
+    - _Requirements: 4.3, 4.4_
+
+  - [x] 7.3 Implement error handling UI
+    - Add error message display for API failures
+    - Show error states without breaking page layout
+    - Provide clear error messages for portfolio and position loading failures
+    - _Requirements: 8.4_
+
+- [ ] 8. Enhance dashboard with real data integration
+  - [ ] 8.1 Update dashboard to use first portfolio data
+    - Modify dashboard to automatically select first portfolio
+    - Display real metrics from selected portfolio positions
+    - Update metric cards to show actual Total Value, Cost, and P&L
+    - _Requirements: 6.1, 6.2, 8.1, 8.2_
+
+  - [ ] 8.2 Add portfolio selection to dashboard
+    - Allow users to select which portfolio to display on dashboard
+    - Add portfolio switcher component to dashboard header
+    - Update all dashboard metrics when portfolio changes
+    - _Requirements: 7.1, 7.2_
+
+- [ ] 9. Add responsive behavior and mobile optimization
+  - [ ] 9.1 Optimize mobile navigation
+    - Ensure sidebar navigation works properly on mobile devices
+    - Test and refine mobile layout for portfolio cards and tables
+    - Add proper touch interactions for mobile users
+    - _Requirements: 2.3_
+
+  - [ ] 9.2 Improve table responsiveness
+    - Make portfolio positions table scroll horizontally on mobile
+    - Optimize column widths and content for smaller screens
+    - Ensure pagination controls work well on mobile
+    - _Requirements: 3.3, 3.4_
+
+  - [ ] 9.3 Test and refine cross-device experience
+    - Test application on various screen sizes and devices
+    - Ensure consistent functionality across desktop, tablet, and mobile
+    - Optimize loading states and interactions for different devices
     - _Requirements: 4.1, 4.2, 4.3, 4.4_
 
-- [ ] 6. Implement responsive behavior
-  - [ ] 6.1 Add mobile navigation
-    - Create hamburger menu for mobile sidebar toggle
-    - Implement overlay and slide-in animation for mobile sidebar
-    - Add proper touch interactions and gestures
-    - _Requirements: 2.3, 5.3_
+- [x] 10. Implement dividends section
+  - [x] 10.1 Create dividends navigation and main page
+    - Add Dividends section to sidebar navigation with appropriate icon
+    - Create main dividends page showing portfolio selection and overview
+    - Display quick stats and upcoming dividends across all portfolios
+    - _Requirements: 3.1, 3.2_
 
-  - [ ] 6.2 Optimize tablet layouts
-    - Adjust grid layouts for tablet breakpoints
-    - Modify navigation and content spacing for medium screens
-    - Test and refine component behavior on tablets
-    - _Requirements: 5.2_
+  - [x] 10.2 Build portfolio-specific dividends page
+    - Create detailed dividends view for individual portfolios
+    - Display dividend metrics (total received, yield, monthly estimate)
+    - Show dividend-focused holdings table with yield calculations
+    - Add breadcrumb navigation between dividends views
+    - _Requirements: 3.3, 3.4, 6.1, 6.2, 6.4_
 
-  - [ ] 6.3 Refine desktop experience
-    - Optimize layouts for large screens
-    - Add hover states and desktop-specific interactions
-    - Ensure proper keyboard navigation support
-    - _Requirements: 5.1_
+  - [x] 10.3 Integrate monthly dividend chart
+    - Add dividend chart component to portfolio dividends page
+    - Connect to /portfolios/{id}/dividends/monthly API endpoint
+    - Display historical dividend payments by month across multiple years
+    - _Requirements: 6.3, 8.1, 8.2, 8.3_
 
-- [ ] 7. Add loading and error states
-  - [ ] 7.1 Create loading components
-    - Build skeleton loaders for data-heavy components
-    - Create spinner component for actions and form submissions
-    - Add loading states to all API-dependent components
-    - _Requirements: 1.1, 1.2_
+- [x] 11. Implement smart routing and locale detection
+  - [x] 11.1 Set up automatic locale detection
+    - Detect browser language preference on first visit
+    - Redirect root URL to appropriate locale dashboard (en/es)
+    - Remove redundant locale landing pages
+    - _Requirements: 9.1, 9.2, 9.3_
 
-  - [ ] 7.2 Implement error handling UI
-    - Create error boundary components for graceful error handling
-    - Build error message components with consistent styling
-    - Add retry mechanisms for failed API calls
-    - _Requirements: 1.1, 1.2_
+  - [x] 11.2 Streamline navigation flow
+    - Redirect locale roots (/en, /es) directly to dashboard
+    - Ensure all navigation links use proper locale prefixes
+    - Maintain consistent routing patterns across the application
+    - _Requirements: 9.1, 9.2, 9.3_
 
-  - [ ] 7.3 Add empty states
-    - Create empty state components with helpful messaging
-    - Add call-to-action buttons to guide users
-    - Implement empty states for portfolio, activity, and other data lists
-    - _Requirements: 3.1, 3.2, 3.3_
+- [ ] 12. Future internationalization enhancements
+  - [ ] 12.1 Add language switching functionality
+    - Create language switcher component in header
+    - Allow users to manually change language preference
+    - Store language preference in user settings or localStorage
+    - _Requirements: 9.4_
 
-- [ ] 8. Update existing pages with new design
-  - [ ] 8.1 Migrate login page to new design system
-    - Update login page styling to match new design
-    - Ensure Auth0 integration continues to work properly
-    - Add proper loading and error states for authentication
-    - _Requirements: 1.1, 1.2, 4.1, 4.2, 4.3, 4.4_
+  - [ ] 12.2 Enhance locale detection
+    - Add more sophisticated language detection logic
+    - Support additional languages beyond English and Spanish
+    - Implement fallback strategies for unsupported locales
+    - _Requirements: 9.1, 9.4_
 
-  - [ ] 8.2 Update root layout and global styles
-    - Apply new design system to root layout component
-    - Update global CSS with new color scheme and typography
-    - Ensure consistent styling across all pages
-    - _Requirements: 1.1, 1.2, 1.3_
+- [ ] 13. Advanced portfolio features
+  - [ ] 13.1 Add portfolio management features
+    - Create forms for adding new portfolios
+    - Implement portfolio editing and deletion
+    - Add portfolio settings and configuration options
+    - _Requirements: 7.1, 7.2_
 
-- [ ] 9. Polish and accessibility
-  - [ ] 9.1 Add keyboard navigation support
-    - Implement proper tab order for all interactive elements
-    - Add keyboard shortcuts for common actions
-    - Ensure all components are accessible via keyboard
-    - _Requirements: 2.2, 4.3_
+  - [ ] 13.2 Enhance position management
+    - Add functionality to add/edit/remove positions
+    - Implement stock search and selection
+    - Add transaction history and dividend tracking
+    - _Requirements: 3.1, 3.2, 3.3, 3.4_
 
-  - [ ] 9.2 Improve focus management
-    - Add visible focus indicators for all interactive elements
-    - Implement proper focus trapping in modals and dropdowns
-    - Ensure focus returns to appropriate elements after interactions
-    - _Requirements: 1.2, 2.2, 4.3_
-
-  - [ ] 9.3 Add ARIA labels and screen reader support
-    - Add appropriate ARIA labels to all components
-    - Implement screen reader announcements for dynamic content
-    - Test with screen readers and fix accessibility issues
-    - _Requirements: 1.1, 2.1, 3.1, 4.1, 6.1_
+  - [ ] 13.3 Add advanced analytics
+    - Create performance charts and graphs
+    - Add dividend calendar and projections
+    - Implement portfolio comparison features
+    - _Requirements: 6.1, 6.2, 6.3, 6.4_

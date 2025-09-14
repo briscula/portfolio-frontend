@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import AppLayout from '../../../components/AppLayout';
 import { MetricCard, MetricCardsGrid, DollarSignIcon, PercentIcon, CalendarIcon, ActivityList, DividendCalendar, type ActivityItem, type DividendEvent } from '../../../components/ui';
 import { usePortfolios, usePositions, usePortfolioSummary, type Portfolio } from '../../../hooks/usePortfolio';
+import { DividendProgressView } from '../../../components/DividendProgressView/DividendProgressView';
 
 // Mock data for recent activities
 const mockActivities: ActivityItem[] = [
@@ -106,7 +107,7 @@ export default function DashboardPage() {
     const { positions, loading: positionsLoading, error: positionsError } = usePositions(selectedPortfolioId);
     const portfolioSummary = usePortfolioSummary(positions);
 
-    if (isLoading || portfoliosLoading || positionsLoading) {
+    if (isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
@@ -133,6 +134,13 @@ export default function DashboardPage() {
                 {positionsError ? (
                     <div className="bg-red-50 border border-red-200 rounded-md p-4">
                         <p className="text-red-800">Error loading portfolio data: {positionsError}</p>
+                    </div>
+                ) : portfoliosLoading || positionsLoading ? (
+                    <div className="bg-white rounded-lg border border-gray-200 p-8">
+                        <div className="text-center">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-3"></div>
+                            <p className="text-sm text-gray-600">Loading portfolio metrics...</p>
+                        </div>
                     </div>
                 ) : (
                     <MetricCardsGrid>
@@ -171,25 +179,56 @@ export default function DashboardPage() {
                 )}
 
                 {/* Recent activity */}
-                <ActivityList
-                    activities={mockActivities}
-                    maxItems={5}
-                    showViewAll
-                    onViewAll={() => {
-                        // TODO: Navigate to full activity page
-                        console.log('Navigate to activity page');
-                    }}
-                />
+                {portfoliosLoading ? (
+                    <div className="bg-white rounded-lg border border-gray-200 p-6">
+                        <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-lg font-medium text-gray-900">Recent Activity</h3>
+                        </div>
+                        <div className="text-center py-8">
+                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                            <p className="text-sm text-gray-600">Loading recent activity...</p>
+                        </div>
+                    </div>
+                ) : (
+                    <ActivityList
+                        activities={mockActivities}
+                        maxItems={5}
+                        showViewAll
+                        onViewAll={() => {
+                            // TODO: Navigate to full activity page
+                            console.log('Navigate to activity page');
+                        }}
+                    />
+                )}
 
                 {/* Upcoming dividends */}
-                <DividendCalendar
-                    dividends={mockDividends}
-                    maxItems={4}
-                    showViewAll
-                    onViewAll={() => {
-                        // TODO: Navigate to full dividends page
-                        console.log('Navigate to dividends page');
-                    }}
+                {portfoliosLoading ? (
+                    <div className="bg-white rounded-lg border border-gray-200 p-6">
+                        <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-lg font-medium text-gray-900">Upcoming Dividends</h3>
+                        </div>
+                        <div className="text-center py-8">
+                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                            <p className="text-sm text-gray-600">Loading upcoming dividends...</p>
+                        </div>
+                    </div>
+                ) : (
+                    <DividendCalendar
+                        dividends={mockDividends}
+                        maxItems={4}
+                        showViewAll
+                        onViewAll={() => {
+                            // TODO: Navigate to full dividends page
+                            console.log('Navigate to dividends page');
+                        }}
+                    />
+                )}
+
+                {/* Dividend Progress View */}
+                <DividendProgressView 
+                    userId={user.sub}
+                    defaultPeriod="quarter"
+                    className="mt-6"
                 />
             </div>
         </AppLayout>

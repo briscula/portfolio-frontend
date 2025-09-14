@@ -27,7 +27,7 @@ interface ChartDataPoint {
 }
 
 interface DividendChartProps {
-  portfolioId?: number;
+  portfolioId?: string;
   startYear?: number;
   endYear?: number;
 }
@@ -70,7 +70,7 @@ const transformApiDataToChartFormat = (apiResponse: DividendApiResponse, locale:
 };
 
 export default function DividendChart({
-  portfolioId = 1,
+  portfolioId,
   startYear,
   endYear
 }: DividendChartProps) {

@@ -163,15 +163,28 @@ export const clientApi = {
  */
 export const dividendApi = {
   /**
-   * Get monthly dividend overview
+   * Get monthly dividend overview for a specific portfolio
    */
-  async getMonthlyOverview(params: { startYear: number; endYear: number }) {
-    // This would call your dividend analytics endpoint
-    // For now, return mock data to prevent errors
-    return {
-      months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      years: Array.from({ length: params.endYear - params.startYear + 1 }, (_, i) => (params.startYear + i).toString()),
-      data: []
-    };
+  async getMonthlyOverview(params: { 
+    startYear: number; 
+    endYear: number; 
+    portfolioId?: string;
+    stockSymbol?: string;
+  }) {
+    if (params.portfolioId) {
+      // Call the real API endpoint for portfolio-specific dividend data
+      return clientApiRequest(`/portfolios/${params.portfolioId}/dividends/monthly`, {
+        startYear: params.startYear.toString(),
+        endYear: params.endYear.toString(),
+        ...(params.stockSymbol && { stockSymbol: params.stockSymbol })
+      });
+    } else {
+      // Fallback to mock data for general use
+      return {
+        months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        years: Array.from({ length: params.endYear - params.startYear + 1 }, (_, i) => (params.startYear + i).toString()),
+        data: []
+      };
+    }
   }
 };
