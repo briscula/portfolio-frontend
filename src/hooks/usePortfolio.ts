@@ -46,11 +46,26 @@ export interface PortfolioSummary {
   monthlyDividends: number;
 }
 
+export interface Portfolio {
+  id: string;
+  userId: string;
+  name: string;
+  description: string | null;
+  currencyCode: string;
+  createdAt: string;
+  updatedAt: string;
+  currency: {
+    code: string;
+    name: string;
+    symbol: string;
+  };
+}
+
 /**
  * Hook to fetch portfolios
  */
 export function usePortfolios() {
-  const [portfolios, setPortfolios] = useState<any[]>([]);
+  const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -96,7 +111,7 @@ export function usePositions(portfolioId?: number, page: number = 1, pageSize: n
       setError(null);
       const response = await clientApi.getPositions(portfolioId, pageNum, pageSize);
       console.log('Positions API Response:', response); // Debug log
-      
+
       if (response && response.data && Array.isArray(response.data)) {
         setPositions(response.data);
         setPagination(response.pagination);
@@ -117,11 +132,11 @@ export function usePositions(portfolioId?: number, page: number = 1, pageSize: n
     fetchPositions(page);
   }, [portfolioId, page, pageSize]);
 
-  return { 
-    positions, 
-    pagination, 
-    loading, 
-    error, 
+  return {
+    positions,
+    pagination,
+    loading,
+    error,
     refetch: () => fetchPositions(page),
     fetchPage: (pageNum: number) => fetchPositions(pageNum)
   };
@@ -133,7 +148,7 @@ export function usePositions(portfolioId?: number, page: number = 1, pageSize: n
 export function usePortfolioSummary(positions: Position[]): PortfolioSummary {
   const totalCost = Math.abs(positions.reduce((sum, pos) => sum + Math.abs(pos.totalCost), 0));
   const totalDividends = positions.reduce((sum, pos) => sum + pos.totalDividends, 0);
-  
+
   return {
     totalValue: totalCost, // We don't have current market value yet, so use cost
     totalCost: totalCost,
